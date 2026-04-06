@@ -6,7 +6,7 @@
   <style>
     body {
       text-align: center;
-      font-family: sans-serif;
+      font-family: 'Georgia', serif;
       margin: 0;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       overflow-x: hidden;
@@ -14,35 +14,35 @@
 
     h1 {
       margin-top: 30px;
-      color: #ff1a66;
-      font-size: 35px;
+      color: #b30059;
+      font-size: 34px;
     }
 
     /* SOBRE */
     .sobre {
-      width: 200px;
-      height: 150px;
+      width: 220px;
+      height: 160px;
       background: #ff4d88;
       margin: 120px auto;
       position: relative;
       cursor: pointer;
-      border-radius: 5px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      border-radius: 6px;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.25);
       animation: latido 1.5s infinite;
     }
 
     @keyframes latido {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.06); }
     }
 
     .tapa {
       position: absolute;
       width: 0;
       height: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 75px solid #ff1a66;
+      border-left: 110px solid transparent;
+      border-right: 110px solid transparent;
+      border-bottom: 80px solid #ff1a66;
       top: 0;
       transform-origin: top;
       transition: transform 1s;
@@ -55,25 +55,45 @@
     .mensaje-sobre {
       position: absolute;
       width: 100%;
-      top: 60px;
+      top: 65px;
       color: white;
       font-weight: bold;
     }
 
-    /* CARTA */
+    /* CARTA REALISTA */
     .carta {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 650px;
+      margin: 40px auto;
+      background: #fffdf7;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.25),
+        inset 0 0 10px rgba(0,0,0,0.05);
       display: none;
-      border: 2px solid #ff4d88;
+      border: 1px solid #eee;
       transform: translateY(200px);
       opacity: 0;
       transition: all 1.2s ease;
       position: relative;
+      line-height: 1.6;
+    }
+
+    /* efecto papel */
+    .carta::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 24px,
+        rgba(0,0,0,0.03) 25px
+      );
+      pointer-events: none;
     }
 
     .mostrar {
@@ -83,12 +103,12 @@
     }
 
     button {
-      padding: 12px 20px;
+      padding: 12px 22px;
       border: none;
       border-radius: 20px;
       background: linear-gradient(45deg, #ff4d88, #ff1a66);
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
       margin: 5px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -118,7 +138,7 @@
       100% { opacity: 0; transform: scale(2); }
     }
 
-    /* TRANSICIÓN ROBLOX */
+    /* TRANSICIÓN */
     .fade-screen {
       position: fixed;
       top: 0;
@@ -142,21 +162,17 @@
 
   <h1>💌 Para Victoria 💌</h1>
 
-  <!-- SOBRE -->
   <div class="sobre" id="sobre" onclick="abrirCarta()">
     <div class="tapa"></div>
     <div class="mensaje-sobre">Abrir 💕</div>
   </div>
 
-  <!-- FADE -->
   <div id="fade" class="fade-screen"></div>
 
-  <!-- MÚSICA -->
   <audio id="musica" loop>
     <source src="cancion.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- CARTA -->
   <div class="carta" id="carta">
     <p>
       Hola Victoria,<br><br>
@@ -185,7 +201,7 @@
       <b>Te amo ❤️</b>
     </p>
 
-    <h3>💖 Victoria… en este juego de la vida, quiero ser tu compañero siempre 💖</h3>
+    <h3>¿Quieres formalizar conmigo? 💍</h3>
 
     <button onclick="si()">SÍ ❤️</button>
     <button id="noBtn" onmouseover="moverNo()">NO 😢</button>
@@ -241,7 +257,6 @@
 
     function crearCorazon() {
       let heart = document.createElement("div");
-
       let tipos = ["💖","💘","✨","💎"];
       heart.innerHTML = tipos[Math.floor(Math.random()*tipos.length)];
 
@@ -252,7 +267,6 @@
       heart.style.animation = "floatUp 5s linear";
 
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 5000);
     }
 
@@ -264,7 +278,6 @@
       s.style.top = Math.random() * 100 + "vh";
 
       document.body.appendChild(s);
-
       setTimeout(() => s.remove(), 2000);
     }
   </script>
