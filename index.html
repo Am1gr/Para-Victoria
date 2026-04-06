@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Para ti ❤️</title>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      padding: 40px;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #ff1a66;
+    }
+
+    .carta {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      display: none;
+      animation: aparecer 1.5s ease;
+      border: 2px solid #ff4d88;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(45deg, #ff4d88, #ff1a66);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #noBtn {
+      position: absolute;
+    }
+
+    @keyframes aparecer {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .sparkle {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 2s linear infinite;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>💕 Para mi amor Victoria 💕</h1>
+
+  <button onclick="iniciar()">Abrir carta ❤️</button>
+
+  <!-- 🎵 Música -->
+  <audio id="musica" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="carta" id="carta">
+    <p>
+      Hola Victoria,<br><br>
+
+      hoy hago esto para demostrarte mi amor hacia ti, se que no soy el mejor novio del mundo,
+      se que muchas veces cometo errores y se que no soy perfecto.
+      Lo que si se es el cuanto te amo, el cuanto te quiero, el como te admiro
+      y el como cada día espero y rezo porque estes bien.<br><br>
+
+      Llevamos ya 1 año juntos y espero que cumplamos muchos mas y de hecho quiero
+      aprovechar esto como una forma de hacer formal nuestra relación,
+      se que hace unos pocos meses hablamos sobre esto y hoy te pido que seas mi novia Victoria,
+      te pido con mi corazón que formalicemos esto,
+      te pido con todo mi ser que estemos juntos hasta que la vida lo decida.<br><br>
+
+      Te amo mucho Victoria, gracias por llegar a mi vida,
+      gracias por estar para mi y de verdad gracias por estar conmigo.<br><br>
+
+      Solo te puedo decir que te amo mucho y que quiero lo mejor para ti,
+      que ambos demostremos ese amor que nos ha unido por mas de 1 año
+      y que sigamos adelante juntos,
+      que sepamos como arreglar nuestros problemas
+      y que sobre todo nos amemos,
+      porque es lo que mas quiero Victoria.<br><br>
+
+      <b>Te amo ❤️</b>
+    </p>
+
+    <br>
+
+    <h3>¿Quieres formalizar conmigo? 💍</h3>
+
+    <button onclick="si()">SÍ ❤️</button>
+    <button id="noBtn" onmouseover="moverNo()">NO 😢</button>
+
+    <p id="respuesta" style="margin-top:20px;"></p>
+  </div>
+
+  <script>
+    function iniciar() {
+      document.getElementById("carta").style.display = "block";
+
+      let audio = document.getElementById("musica");
+      audio.volume = 0;
+      audio.play();
+
+      let vol = 0;
+      let fade = setInterval(() => {
+        if (vol < 1) {
+          vol += 0.05;
+          audio.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 200);
+
+      setInterval(crearCorazon, 300);
+      setInterval(crearBrillo, 200);
+    }
+
+    function si() {
+      document.getElementById("respuesta").innerText =
+      "Te amo mucho mi niña :.3 ❤️";
+
+      for (let i = 0; i < 80; i++) {
+        crearCorazon();
+      }
+
+      document.body.style.background = "#ffccd5";
+    }
+
+    function moverNo() {
+      let btn = document.getElementById("noBtn");
+
+      let x = Math.random() * (window.innerWidth - 100);
+      let y = Math.random() * (window.innerHeight - 50);
+
+      btn.style.left = x + "px";
+      btn.style.top = y + "px";
+    }
+
+    function crearCorazon() {
+      let heart = document.createElement("div");
+      heart.innerHTML = "💖";
+
+      heart.style.position = "fixed";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.bottom = "-10px";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      heart.style.animation = "floatUp 5s linear";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    function crearBrillo() {
+      let s = document.createElement("div");
+      s.classList.add("sparkle");
+
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.top = Math.random() * 100 + "vh";
+
+      document.body.appendChild(s);
+
+      setTimeout(() => s.remove(), 2000);
+    }
+  </script>
+
+</body>
+</html>
