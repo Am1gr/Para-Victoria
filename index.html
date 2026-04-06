@@ -7,16 +7,60 @@
     body {
       text-align: center;
       font-family: sans-serif;
-      padding: 40px;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       margin: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      overflow-x: hidden;
     }
 
     h1 {
-      font-size: 40px;
+      margin-top: 30px;
       color: #ff1a66;
+      font-size: 35px;
     }
 
+    /* SOBRE */
+    .sobre {
+      width: 200px;
+      height: 150px;
+      background: #ff4d88;
+      margin: 120px auto;
+      position: relative;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      animation: latido 1.5s infinite;
+    }
+
+    @keyframes latido {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .tapa {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 75px solid #ff1a66;
+      top: 0;
+      transform-origin: top;
+      transition: transform 1s;
+    }
+
+    .abrir .tapa {
+      transform: rotateX(180deg);
+    }
+
+    .mensaje-sobre {
+      position: absolute;
+      width: 100%;
+      top: 60px;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* CARTA */
     .carta {
       max-width: 600px;
       margin: auto;
@@ -25,10 +69,17 @@
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       display: none;
-      animation: aparecer 1.5s ease;
       border: 2px solid #ff4d88;
+      transform: translateY(200px);
+      opacity: 0;
+      transition: all 1.2s ease;
       position: relative;
-      z-index: 2;
+    }
+
+    .mostrar {
+      display: block;
+      transform: translateY(0);
+      opacity: 1;
     }
 
     button {
@@ -43,19 +94,11 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    button:hover {
-      transform: scale(1.05);
-    }
-
     #noBtn {
       position: absolute;
     }
 
-    @keyframes aparecer {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
+    /* EFECTOS */
     @keyframes floatUp {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(-100vh); opacity: 0; }
@@ -71,23 +114,49 @@
     }
 
     @keyframes sparkle {
-      0% { opacity: 1; transform: scale(1); }
+      0% { opacity: 1; }
       100% { opacity: 0; transform: scale(2); }
+    }
+
+    /* TRANSICIÓN ROBLOX */
+    .fade-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 999;
+    }
+
+    .fade-active {
+      opacity: 1;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>💕 Para mi amor Victoria 💕</h1>
+  <h1>💌 Para Victoria 💌</h1>
 
-  <button onclick="iniciar()">Abrir carta ❤️</button>
+  <!-- SOBRE -->
+  <div class="sobre" id="sobre" onclick="abrirCarta()">
+    <div class="tapa"></div>
+    <div class="mensaje-sobre">Abrir 💕</div>
+  </div>
 
-  <!-- 🎵 Música -->
+  <!-- FADE -->
+  <div id="fade" class="fade-screen"></div>
+
+  <!-- MÚSICA -->
   <audio id="musica" loop>
     <source src="cancion.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- CARTA -->
   <div class="carta" id="carta">
     <p>
       Hola Victoria,<br><br>
@@ -116,36 +185,36 @@
       <b>Te amo ❤️</b>
     </p>
 
-    <br>
-
-    <h3>¿Quieres formalizar conmigo? 💍</h3>
+    <h3>💖 Victoria… en este juego de la vida, quiero ser tu compañero siempre 💖</h3>
 
     <button onclick="si()">SÍ ❤️</button>
     <button id="noBtn" onmouseover="moverNo()">NO 😢</button>
 
-    <p id="respuesta" style="margin-top:20px;"></p>
+    <p id="respuesta"></p>
   </div>
 
   <script>
-    function iniciar() {
-      document.getElementById("carta").style.display = "block";
+    function abrirCarta() {
+      let fade = document.getElementById("fade");
+      let sobre = document.getElementById("sobre");
 
-      let audio = document.getElementById("musica");
-      audio.volume = 0;
-      audio.play();
+      fade.classList.add("fade-active");
 
-      let vol = 0;
-      let fade = setInterval(() => {
-        if (vol < 1) {
-          vol += 0.05;
-          audio.volume = vol;
-        } else {
-          clearInterval(fade);
-        }
-      }, 200);
+      setTimeout(() => {
+        sobre.style.display = "none";
 
-      setInterval(crearCorazon, 300);
-      setInterval(crearBrillo, 200);
+        let carta = document.getElementById("carta");
+        carta.classList.add("mostrar");
+
+        let audio = document.getElementById("musica");
+        audio.play();
+
+        setInterval(crearCorazon, 300);
+        setInterval(crearBrillo, 200);
+
+        fade.classList.remove("fade-active");
+
+      }, 1000);
     }
 
     function si() {
@@ -155,15 +224,16 @@
       for (let i = 0; i < 80; i++) {
         crearCorazon();
       }
-
-      document.body.style.background = "#ffccd5";
     }
 
     function moverNo() {
       let btn = document.getElementById("noBtn");
 
-      let x = Math.random() * (window.innerWidth - 100);
-      let y = Math.random() * (window.innerHeight - 50);
+      let maxX = window.innerWidth - btn.offsetWidth - 20;
+      let maxY = window.innerHeight - btn.offsetHeight - 20;
+
+      let x = Math.random() * maxX;
+      let y = Math.random() * maxY;
 
       btn.style.left = x + "px";
       btn.style.top = y + "px";
@@ -171,7 +241,9 @@
 
     function crearCorazon() {
       let heart = document.createElement("div");
-      heart.innerHTML = "💖";
+
+      let tipos = ["💖","💘","✨","💎"];
+      heart.innerHTML = tipos[Math.floor(Math.random()*tipos.length)];
 
       heart.style.position = "fixed";
       heart.style.left = Math.random() * 100 + "vw";
